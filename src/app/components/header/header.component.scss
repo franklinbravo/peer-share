@@ -1,0 +1,19 @@
+.nav-vertical{ 
+    position: fixed;
+    width: 60px;
+    height: 100%;
+    margin-left: 0px;
+    background-color: rgb(18, 18, 32)
+}
+.nav-vertical a{
+    text-align: center;
+    cursor: pointer;
+} 
+.popContact{
+    max-width: 100%;
+    min-width: 500px;
+    margin-bottom: 10px;
+    padding: 0px;
+    z-index: 1000;
+    
+}

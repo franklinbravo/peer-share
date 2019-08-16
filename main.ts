@@ -1,8 +1,8 @@
-import { app, BrowserWindow, screen } from 'electron';
+import { app, BrowserWindow, screen, ipcMain, remote } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve;
+let win, serve, openChatWindow;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
 
@@ -17,11 +17,13 @@ function createWindow() {
     y: 0,
     width: size.width,
     height: size.height,
+    minWidth:600,
+    minHeight:400,
     webPreferences: {
       nodeIntegration: true,
     },
   });
-
+  
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
@@ -33,6 +35,7 @@ function createWindow() {
       protocol: 'file:',
       slashes: true
     }));
+    
   }
 
   if (serve) {
@@ -47,6 +50,9 @@ function createWindow() {
     win = null;
   });
 
+  /*ipcMain.on('openChat', ()=>{
+    openChatWindow.show();
+  })*/
 }
 
 try {

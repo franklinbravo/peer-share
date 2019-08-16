@@ -1,0 +1,28 @@
+.sidebar {
+    grid-area: sidebar;
+    
+    width: 60px;       
+} 
+.content {
+    grid-area: content;
+    margin-left: 0px;
+}
+.header {
+    grid-area: header;
+}
+.footer {
+    grid-area: footer;
+}
+.wrapper {
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 4fr 4fr 4fr 1fr;
+    grid-template-areas:
+    "sidebar content content content content"
+    "sidebar content content content content"
+    "footer footer footer footer footer ";
+    
+    width: 100%;
+    height: 100%;
+}
+  

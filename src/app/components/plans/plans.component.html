@@ -1,0 +1,220 @@
+<div class="justify-content-center container mb-5">
+  <div class="nav p-2 contenedor justify-content-center ">
+      <ng-template #popTitle1><div style="color: black">Domingo</div></ng-template>
+      <ng-template #popContent1 > 
+          <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI1" [meridian]="meridianI1"></ngb-timepicker>
+          <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF1" [meridian]="meridianF1"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent1" 
+      [popoverTitle]="popTitle1"
+      [ngClass]="{'btn-success': dom,'btn-outline-secondary': !dom}"
+      (click)="dom= !dom"
+      >
+        Dom
+      </button>
+      <ng-template #popTitle2 ><div style="color: black">Lunes</div></ng-template>
+      <ng-template #popContent2>
+          <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI2" [meridian]="meridianI2"></ngb-timepicker>
+        <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF2" [meridian]="meridianF2"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn btn-outline-secondary mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent2" 
+      [popoverTitle]="popTitle2"
+      [ngClass]="{'btn-success': lun,'btn-outline-secondary': !lun}"
+      (click)="lun= !lun"
+      >
+        Lun
+      </button>
+      <ng-template #popTitle3><div style="color: black">Martes</div></ng-template>
+      <ng-template #popContent3>
+          <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI3" [meridian]="meridianI3"></ngb-timepicker>
+        <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF3" [meridian]="meridianF3"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn btn-outline-secondary mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent3" 
+      [popoverTitle]="popTitle3"
+      [ngClass]="{'btn-success': mar,'btn-outline-secondary': !mar}"
+      (click)="mar= !mar"
+      >
+        Mar
+      </button>
+      <ng-template #popTitle4><div style="color: black">Miercoles</div></ng-template>
+      <ng-template #popContent4>
+          <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI4" [meridian]="meridianI4"></ngb-timepicker>
+        <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF4" [meridian]="meridianF4"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn btn-outline-secondary mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent4" 
+      [popoverTitle]="popTitle4"
+      [ngClass]="{'btn-success': mie,'btn-outline-secondary': !mie}"
+      (click)="mie= !mie"
+      >
+        Mie
+      </button>
+      <ng-template #popTitle5><div style="color: black">Jueves</div></ng-template>
+      <ng-template #popContent5>
+          <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI5" [meridian]="meridianI5"></ngb-timepicker>
+        <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF5" [meridian]="meridianF5"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn btn-outline-secondary mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent5" 
+      [popoverTitle]="popTitle5"
+      [ngClass]="{'btn-success': jue,'btn-outline-secondary': !jue}"
+      (click)="jue= !jue">
+        Jue
+      </button>
+      <ng-template #popTitle6><div style="color: black">Viernes</div></ng-template>
+      <ng-template #popContent6>
+          <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI6" [meridian]="meridianI6"></ngb-timepicker>
+        <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF6" [meridian]="meridianF6"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn btn-outline-secondary mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent6" 
+      [popoverTitle]="popTitle6"
+      [ngClass]="{'btn-success': vie,'btn-outline-secondary': !vie}"
+      (click)="vie= !vie"
+      >
+        Vie
+      </button>
+      <ng-template #popTitle7><div style="color: black">Sabado</div></ng-template>
+      <ng-template #popContent7>
+        <div style="color: black">Inicio</div>
+        <ngb-timepicker [(ngModel)]="timeI7" [meridian]="meridianI7"></ngb-timepicker>
+        <div style="color: black">Final</div>
+        <ngb-timepicker [(ngModel)]="timeF7" [meridian]="meridianF7"></ngb-timepicker>
+      </ng-template>
+      <button type="button" 
+      class="btn btn-outline-secondary mr-2"
+      placement="bottom"
+      [autoClose]="'outside'"
+      #p="ngbPopover"
+      [ngbPopover]="popContent7" 
+      [popoverTitle]="popTitle7"
+      [ngClass]="{'btn-success': sab,'btn-outline-secondary': !sab}"
+      (click)="sab= !sab"
+      >
+        Sab
+      </button>
+      
+  
+      <mat-form-field class="box">
+          <input matInput [matDatepicker]="picker" placeholder="Fecha Inicial"
+          [(ngModel)]="ini" #inicio
+           >  
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker  startView="year" ></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field class="box2">
+          <input matInput [matDatepicker]="picker2" placeholder="Fecha final"
+          [(ngModel)]="fini"
+          #final
+           >
+          <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+          <mat-datepicker #picker2   startView="year" ></mat-datepicker>
+      </mat-form-field> 
+      <button mat-icon-button color="primary" class="save mt-2" [disabled]="!btn_on" [ngClass]="{'btnoff': ((this.dom==false ||this.lun==false || this.mar==false || this.mie==false || this.jue==false || this.vie==false || this.sab==false) && inicio=='' && final=='')}">
+        <fa-icon [icon]="['fas', 'plus-circle']"  (click)="generate(inicio,final)" size="2x"></fa-icon>
+      </button>
+  
+  
+  </div> 
+  <!----------Hasta aqui llega la tabla para generar----------->
+
+
+  <form [formGroup]="form" *ngIf="show" class="d-flex align-items-center flex-column">
+  <mat-form-field class="text-center fill-width">
+    <input matInput placeholder="Nombre de la materia"  formControlName="nameMateria" >
+  </mat-form-field>
+  <div formArrayName="Xs">
+    <mat-accordion class="example-headers-align " *ngFor="let X of form['controls'].Xs['controls']; let ix=index" >
+        
+      <div formGroupName='{{ix}}' style="margin: 4px">
+          <mat-expansion-panel hideToggle  >
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Unidad  {{ix+1}}
+                </mat-panel-title>
+                <mat-panel-description>
+                  <fa-icon [icon]="['fas', 'times-circle']" class="timescir" (click)="deleteDatos(ix)"></fa-icon>
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="todo" >
+                <div class="contenido">
+                  <mat-form-field class="full-width">
+                    <input matInput placeholder="Titulo"  formControlName="titulo" >
+                  </mat-form-field>
+                  <mat-form-field class="full-width">
+                    <textarea matInput type="text" placeholder="Contenido" formControlName="contenido" ></textarea>
+                  </mat-form-field>
+                </div>
+                <div class="dateEvent " formArrayName="Ys">
+                  <div *ngFor="let Y of X['controls'].Ys['controls']; let iy =index" >
+                    <div formGroupName='{{iy}}'>
+                      <mat-form-field  style="width: 33%" >
+                        <mat-select placeholder="Actividad" #actvidad formControlName="Y1" > 
+                          <mat-option value="clase">Clase</mat-option>
+                          <mat-option value="Quiz">Quiz</mat-option>
+                          <mat-option value="test">Test</mat-option>
+                          <mat-option value="taller">Taller</mat-option>
+                          <mat-option value="parcial">Parcial</mat-option>
+                          <mat-option value="prueba_corta">Prueba Corta</mat-option>
+                        </mat-select> 
+                      </mat-form-field>
+                      <mat-form-field  style="width: 33%">
+                        <input matInput [matDatepicker]="pic" placeholder="Fecha "   formControlName="Y2">
+                      </mat-form-field>
+                      <!------------------[hidden]="X['controls'].Ys[iy].Y1=='clase'"---------->
+                      <mat-form-field style="width: 15%" >
+                        <input matInput placeholder="%"  formControlName="Y3">
+                      </mat-form-field>
+                      <fa-icon [icon]="['fas', 'times-circle']" style="width: 15%; cursor: pointer;" (click)="deleteFechas(ix,iy)"></fa-icon>
+                    </div>
+                  </div>
+                  <small class="form-text text-muted">Agrega clases o evaluaciones con el boton abajo</small>
+                  <fa-icon [icon]="['fas', 'plus-circle']" class="plus " (click)="addY(ix)"></fa-icon>
+                </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </mat-accordion>
+    </div>
+      <button  class="btn btn-success btnguardar" (click)="save()" >Guardar</button>
+  </form>
+  </div>      

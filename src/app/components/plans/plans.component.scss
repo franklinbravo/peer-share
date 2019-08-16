@@ -1,0 +1,49 @@
+.contenedor{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: repeat(7, 60px);
+    grid-template-areas:
+    "boton boton boton boton boton boton boton"
+    " box box box box2 box2 box2 save";
+    
+    width: 100%;
+
+  }
+  .box {
+    
+    grid-area: box;
+  }
+  .box2{
+    
+    grid-area: box2;
+  }
+  .box3{
+    
+    grid-area: box3;
+  }
+  .save{
+    
+    grid-area: save;
+  }
+  .plus{
+    position: relative;
+    top: 80%;
+    margin-left: 90%;
+    cursor: pointer;
+  }
+  .todo{
+    display: grid;
+    grid-gap: 10px;
+    grid-template-columns: 1fr 1fr;
+  }
+  .full-width {
+    width: 100%;
+  }
+  
+  .timescir {
+    margin-left: 95%;
+    cursor: pointer;
+  } 
+  .btnoff {
+    cursor:no-drop;
+  } 

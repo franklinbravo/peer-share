@@ -1,1 +1,12 @@
-<router-outlet></router-outlet>
+<main-nav>
+    <div class="wrapper">
+        <div class="sidebar">
+            <app-header  style="z-index: 99"></app-header>
+        </div>
+        <div class="content mt-2">
+            <app-chat></app-chat>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</main-nav>
+  

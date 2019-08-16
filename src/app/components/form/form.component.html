@@ -1,0 +1,115 @@
+<div class="d-flex align-items-center flex-column">
+  <form [formGroup]= "myForm" class="form-container mt-4 mb-4">
+      <mat-form-field >
+        <input matInput placeholder="Nombre" formControlName="name">
+        <mat-error *ngIf="myForm.controls['name'].errors?.required && myForm.controls['name'].touched">
+            Nombre Requerido.
+          </mat-error>
+          <mat-error *ngIf="myForm.controls['name'].errors?.minlength && myForm.controls['name'].touched">
+            El nombre debe ser mayor de 3 letras.
+          </mat-error>
+          <mat-error *ngIf="myForm.controls['name'].errors?.maxlength && myForm.controls['name'].touched">
+            El nombre debe ser menor de 50 letras.
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Apellido" formControlName="lastname">
+        <mat-error *ngIf="myForm.controls['lastname'].errors?.required && myForm.controls['lastname'].touched">
+            Apellido Requerido.
+          </mat-error>
+          <mat-error *ngIf="myForm.controls['lastname'].errors?.minlength && myForm.controls['lastname'].touched">
+            El apellido debe ser mayor de 3 letras.
+          </mat-error>
+          <mat-error *ngIf="myForm.controls['lastname'].errors?.maxlength && myForm.controls['lastname'].touched">
+            El apellido debe ser menor de 50 letras.
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-select placeholder="Edad" formControlName="age"> 
+          <mat-option value="15">15</mat-option>
+          <mat-option value="16">16</mat-option>
+          <mat-option value="17">17</mat-option>
+          <mat-option value="18">18</mat-option>
+          <mat-option value="19">19</mat-option>
+          <mat-option value="20">20</mat-option>
+          <mat-option value="21">21</mat-option>
+          <mat-option value="22">22</mat-option>
+          <mat-option value="23">23</mat-option>
+          <mat-option value="24">24</mat-option>
+          <mat-option value="25">25</mat-option>
+          <mat-option value="26">26</mat-option>
+          <mat-option value="27">27</mat-option>
+          <mat-option value="28">28</mat-option>
+          <mat-option value="29">29</mat-option>
+          <mat-option value="30">30</mat-option>
+          <mat-option value="31">31</mat-option>
+          <mat-option value="32">32</mat-option>
+          <mat-option value="33">33</mat-option>
+          <mat-option value="34">34</mat-option>
+          <mat-option value="35">35</mat-option>
+          <mat-option value="36">36</mat-option>
+          <mat-option value="37">37</mat-option>
+          <mat-option value="38">38</mat-option>
+          <mat-option value="39">39</mat-option>
+          <mat-option value="40">40</mat-option>
+          <mat-option value="41">41</mat-option>
+          <mat-option value="42">42</mat-option>
+          <mat-option value="43">43</mat-option>
+          <mat-option value="44">44</mat-option>
+          <mat-option value="45">45</mat-option>
+          <mat-option value="46">46</mat-option>
+          <mat-option value="47">47</mat-option>
+          <mat-option value="48">48</mat-option>
+          <mat-option value="49">49</mat-option>
+          <mat-option value="50">50</mat-option>
+        </mat-select>
+        <mat-error *ngIf="myForm.controls['age'].errors?.required && myForm.controls['age'].touched">
+          Edad Requerida.
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+          <mat-select placeholder="Semestre" formControlName="semester" > 
+            <mat-option value="1">1</mat-option>
+            <mat-option value="2">2</mat-option>
+            <mat-option value="3">3</mat-option>
+            <mat-option value="4">4</mat-option>
+            <mat-option value="5">5</mat-option>
+            <mat-option value="6">6</mat-option>
+            <mat-option value="7">7</mat-option>
+            <mat-option value="8">8</mat-option>
+            <mat-option value="9">9</mat-option>
+            <mat-option value="10">10</mat-option>
+          </mat-select>
+          <mat-error *ngIf="myForm.controls['semester'].errors?.required && myForm.controls['semester'].touched">
+            Por favor ingrese el semestre en curso.
+          </mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Correo" formControlName="email" required>
+        <mat-error *ngIf="myForm.controls['email'].errors?.required && myForm.controls['email'].touched">
+          Correo Requerido.
+        </mat-error>
+        <mat-error *ngIf="myForm.controls['email'].errors?.email && myForm.controls['email'].touched">
+          Por favor ingrese un correo valido.
+        </mat-error>
+      </mat-form-field>
+      
+      <mat-form-field>
+        <input matInput placeholder="Introduzca su contraseña" formControlName="pwd" [type]="hide ? 'password' : 'text'">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-error *ngIf="myForm.controls['pwd'].errors?.required && myForm.controls['pwd'].touched">
+          Contraseña Requerida.
+        </mat-error>
+      </mat-form-field>
+    
+      <mat-checkbox formControlName="terms">Aceptar condiciones de uso.</mat-checkbox>
+      <mat-error *ngIf="myForm.controls['terms'].errors?.required && myForm.controls['terms'].touched">
+        Campo Requerido.
+      </mat-error>
+  </form>
+    <button mat-raised-button color="primary" (click)="save()" [disabled]="myForm.invalid">Guardar</button>
+    <button mat-raised-button color="secondary" (click)="delete()" >Eliminar datos</button>
+  
+</div>

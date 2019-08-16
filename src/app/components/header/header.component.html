@@ -1,0 +1,22 @@
+<nav class="nav-vertical d-flex align-items-center flex-column">
+  <a color="primary" class="mt-2" >
+    <fa-icon 
+    [icon]="['fas', 'bars']" 
+    size="2x" 
+    (click)="this.cerrarMainNav()">
+    </fa-icon>
+  </a>
+  <a color="primary" class="mt-auto" >
+    <fa-icon [icon]="['fas', 'calendar']" size="2x" ></fa-icon>
+  </a>
+  <a color="primary" class="mt-auto">
+    <fa-icon [icon]="['fas', 'comments']" size="2x" (click)="this.abrirChat()" ></fa-icon>
+  </a>
+  <a  color="primary" class="mt-auto mb-auto" >
+    <fa-icon [icon]="['fas', 'address-card']" size="2x"></fa-icon>
+  </a>
+  <a color="primary" class="mb-auto " >
+    <fa-icon [icon]="['fas', 'archive']" size="2x" ></fa-icon>
+  </a>
+  
+</nav>
