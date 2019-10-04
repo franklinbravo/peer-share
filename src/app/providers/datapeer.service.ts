@@ -3,73 +3,110 @@ import Datastore from 'nedb';
 import * as path from 'path';
 import { ElectronService } from './electron.service';
 import {PeerconnectService} from './peerconnect.service'
+import { User} from '../models/user-data'
 @Injectable({
   providedIn: 'root'
 })
 export class DatapeerService {
-  db:any;
-
+  user:any={
+    name:'',
+    lastname:'',
+    user:'',
+    id:'',
+    contacts:[{
+      name:'Franklin',
+      lastname:'Bravo',
+      key:'123456789'
+    }]
+  } 
+  db:Datastore;
   userDataPath:any;
-  all:any;
-  peerid:any;
-  //private 
-  indicador: boolean=false;
+  dbCache: Datastore;
   constructor(private _electronService: ElectronService,
   public peerConnect:PeerconnectService  ) {
     this.userDataPath = this._electronService.remote.app.getPath('userData');
-    this.db = new Datastore({filename:this.userDataPath+"/userdata.db",autoload:true});
+    this.db = new Datastore({filename: path.join(this.userDataPath,'db',"userdata.db"),autoload:true})
+    this.dbCache=new Datastore({filename: path.join(this.userDataPath,'db',"cache.db"),autoload:true})
+    let dir='./subject'
+    if (!this._electronService.fs.existsSync(dir)){
+      this._electronService.fs.mkdirSync(dir);
+    }
+    
+  }//85047928054075
+  getSubject(cb){
+    this.db.find({_id:this.user.id},(err,doc)=>{
+      console.log(doc)
+      cb(doc[0].class)
+    })
   }
-  
-create(){
- // if(thi)
-  this.db.insert({
-    "_id":'peer01',
-      "name": "",
-      "lastname":"",
-      "age":"",
-      "semester":"",
-      "email":"",
-      "pwd":"",
-      "terms":false,
-      "key":"" 
-  },(err,docs)=>{
-    if(err){
+  editSubject(data,name){
+    let archiveJSON=this._electronService.fs.readFileSync(`subject/${name}.json`,'utf-8')
+    let archive=JSON.parse(archiveJSON)
+    archive=data;
+  }
+  addSubject(data,name){
+    let newData=JSON.stringify(data)
+    this._electronService.fs.writeFileSync(`subject/${name}.json`, newData, 'utf-8')
+    console.log(this.user)
+    let Rclass={
+      id:name,
+      nameClass:data.nameMateria,
+      numUni:data.unidades.length 
+    }
+    this.db.update({_id:this.user.id},{$push:{class:Rclass}},{},(err,doc)=>{
+      if(err){
+        console.log(err) 
+      }else{
+      console.log(doc,'Clase guardada') 
+      }
+    })
+    /*
+    this.dbCache.insert({data},(err,doc)=>{
+      console.log(doc)
+    })*/
+  }
+  showSubject(cb){
+    this.dbCache.find({},async (err,doc)=>{
+      cb(doc)
+    })
+  }
+  addContact(contact){
+    console.log(this.user)
+    this.db.update({_id:this.user.id},{$push:{contacts:contact}},{},(err,doc)=>{
+      if(err){
+        console.log(err) 
+      }else{
+      console.log(doc,'contacto guardado') 
+      }
+    })
+  }
+
+  createUser(data:User,cb){
+    console.log(data)
+    this.db.insert(data,(err,docs)=>{
+      if(err){
       //console.log(err)
-    }else{
-      console.log('Base de datos creada: ',docs)
+      }else{
+        cb('Usuario Guardado')
+        console.log('Base de datos creada: ',docs)
     }
   })
 }
-insertar(datosUser){
-  this.db.update({_id:"peer01"},{$set:datosUser},{}, function(err, doc) {  
-    console.log('Inserted', doc, 'with ID', doc._id);
-    if(err) console.log(err);
-});
+/*async findContacts(){
+  await this.db.find({_id:this.user.id},(err, doc:Array<User>)=>{
+    this.user.contacts=doc[0].contacts;
+  })
+}*/
+async find(username:string,pwd:string,cb){
+  await this.db.find({dataLog:{username:username,pwd:pwd}}, async (err, doc:Array<User>)=>{
+    await cb(err,doc)
+  })
 }
-
-
-eliminar(){
-    this.db.remove({}, { multi: true }, function(err, numDeleted) {  
-      console.log('Deleted', numDeleted, 'user(s)');
+deleteData(){ 
+  this.db.remove({_id:this.user.id}, { multi: true }, function(err, numDeleted) {  
+    console.log('Deleted', numDeleted, 'user(s)');
  });
 }
-async  peerId(){
-  //obtener id
-  await this.db.findOne({_id:'peer01'}, async (err, doc)=> { 
-      if(err){
-        console.log(err);
-      }
-      if(doc && doc.email){
-        let aux= await doc.email
-        await this.peerConnect.getPeerId(aux);
-      }else{
-        console.log('no hay datos que mostrar (ID)');
-      }
-    });
-}
-  getData(doc){
-  this.all=doc;
-  console.log('aqui',this.all)
-}
+  
 }
 

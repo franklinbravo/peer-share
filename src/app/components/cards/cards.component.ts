@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DatapeerService } from '../../providers/datapeer.service'
 @Component({
   selector: 'app-cards',
   templateUrl: './cards.component.html',
@@ -6,9 +7,31 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CardsComponent implements OnInit {
 elevation=true;
-  constructor() { }
+cards=[{
+  nameClass:"matematica",
+  numUni:5,
+  id:"efrhweiurhoi"
+},
+{
+  nameClass:"matematica",
+  numUni:5,
+  id:"yg9g6oi"
+},{
+  nameClass:"matematica",
+  numUni:5,
+  id:"tgvytrhoi"
+},{
+  nameClass:"matematica",
+  numUni:5,
+  id:"efrhweiurhoi"
+}]
+  constructor(private dataPeer:DatapeerService) { }
 
   ngOnInit() {
+    /*
+    this.dataPeer.getSubject(cb=>{
+      this.cards=cb
+    })*/
   }
 
 }
