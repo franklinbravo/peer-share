@@ -1,0 +1,28 @@
+<div class="container d-flex align-items-center flex-column" style="width: 100%">
+  <h1>Bienvenido</h1>
+  <form [formGroup]= "myForm" class="d-flex align-items-center flex-column login" (ngSubmit)="login()" >
+    <mat-form-field style="width: 80%;">
+      <input matInput placeholder="Usuario" formControlName="username">
+      <mat-error *ngIf="myForm.controls['username'].errors?.required && myForm.controls['username'].touched">
+          Usuario Requerido.
+        </mat-error>
+        <mat-error *ngIf="myForm.controls['username'].errors?.minlength && myForm.controls['username'].touched">
+          El usuario debe ser mayor de 3 letras.
+        </mat-error>
+        <mat-error *ngIf="myForm.controls['username'].errors?.maxlength && myForm.controls['username'].touched">
+          El usuario debe ser menor de 50 letras.
+        </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 80%;">
+      <input matInput placeholder="Introduzca su contraseña" formControlName="pwd" [type]="hide ? 'password' : 'text'">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+      <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="myForm.controls['pwd'].errors?.required && myForm.controls['pwd'].touched">
+        Contraseña Requerida.
+      </mat-error>
+    </mat-form-field>
+    <button mat-stroked-button [disabled]="myForm.invalid" style="width: 80%;" type="submit">Login</button>
+    <button mat-stroked-button routerLink="/form" style="width: 80%;">Registrate</button>
+  </form>
+</div>

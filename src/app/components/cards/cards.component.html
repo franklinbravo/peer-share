@@ -1,20 +1,21 @@
 <div class="contenedor" >
-<mat-card [class.mat-elevation-z0]="elevation" class="example-card item">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <mat-card-title>Fisica</mat-card-title>
-          <mat-card-subtitle>franklin</mat-card-subtitle>
-        </mat-card-header>
-        <mat-card-content>
-          <p>
-            The gwrgwrg Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed reiciendis iusto corrupti? Adipisci consequuntur perferendis, aliquam incidunt, dolorum dolor commodi repellendus obcaecati, ducimus odio architecto velit accusantium itaque mollitia? Expedita? six original and distinct spitz breeds of dog from Japan.
-            A smaluho9uhoughohoh98h89yhn rgr gwreg rg er
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button mat-button>Editar</button>
-          <button mat-button>Eliminar</button>
-        </mat-card-actions>
-      </mat-card>
-      
+  <div *ngFor="let card of cards">
+    <!--*ngFor="let card of cards"-->
+    <mat-card [class.mat-elevation-z0]="elevation" class="example-card item" >
+      <mat-card-header>
+        <mat-card-title>{{card.nameClass}}</mat-card-title>
+        <mat-card-subtitle>{{card.numUni}} Unidades</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p style="word-wrap: break-word;">
+          {{card.id}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-button>Editar</button>
+        <button mat-button>Eliminar</button>
+      </mat-card-actions>
+    </mat-card>
+
+  </div>
 </div>

@@ -91,6 +91,7 @@
   "dependencies": {
     "@angular/animations": "^8.0.2",
     "@angular/cdk": "^8.0.2",
+    "@angular/fire": "^5.2.1",
     "@angular/material": "^8.0.2",
     "@fortawesome/angular-fontawesome": "^0.4.0",
     "@fortawesome/fontawesome-svg-core": "^1.2.19",
@@ -103,11 +104,17 @@
     "bootstrap": "^4.3.1",
     "bootswatch": "^4.3.1",
     "crypto-js": "^3.1.9-1",
+    "dat": "^13.13.1",
+    "dat-node": "^3.5.15",
     "date-fns": "^1.30.1",
+    "firebase": "^6.4.2",
     "flatpickr": "^4.6.1",
+    "hyperdb": "^3.5.0",
     "jquery-slim": "^3.0.0",
+    "mkdirp-promise": "^5.0.1",
     "nedb": "^1.8.0",
     "ngx-toastr": "^10.0.4",
+    "node-gyp": "^5.0.3",
     "peerjs": "^1.0.0",
     "popper.js": "^1.15.0"
   }

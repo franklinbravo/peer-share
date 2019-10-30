@@ -8,9 +8,10 @@ import { CardsComponent } from './components/cards/cards.component';
 import { NotesComponent } from './components/notes/notes.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { ChatComponent } from './components/chat/chat.component';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
-    {path: '', redirectTo: '/horario', pathMatch: 'full' },
+    {path: '', redirectTo: '/login', pathMatch: 'full' },
     {path:'horario', component: HorarioComponent },
     {path:'home', component: HomeComponent },
     {path:'form', component: FormComponent },
@@ -18,7 +19,8 @@ const routes: Routes = [
     {path:'cards', component: CardsComponent },
     {path:'notes', component: NotesComponent },
     {path:'contacts',component:ContactsComponent},
-    {path:'chat', component: ChatComponent}
+    {path:'chat', component: ChatComponent},
+    {path:'login', component: LoginComponent}
 ];
 
 @NgModule({

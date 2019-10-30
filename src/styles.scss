@@ -5,6 +5,9 @@ html, body {
 
   height: 100%;
 }
+.mat-sort-header-arrow{
+  margin: 0px;
+}
 @import '../node_modules/angular-calendar/css/angular-calendar.css';
 @import '../node_modules/bootswatch/dist/flatly/bootstrap.css';
 @import '../node_modules/flatpickr/dist/flatpickr.css';

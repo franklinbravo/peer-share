@@ -1,0 +1,70 @@
+{
+    "nameMateria": "Matematica",
+    "unidades": [
+        {
+            "titulo": "Baldor esta loco",
+            "contenido": "Ni se si asi se escribe su nombre pero que as da jejejejejej",
+            "fechas": [
+                {
+                    "tipo": "clase",
+                    "fecha": "2019-09-09",
+                    "ponderacion": 0
+                },
+                {
+                    "tipo": "taller",
+                    "fecha": "2019-09-11",
+                    "ponderacion": "5"
+                },
+                {
+                    "tipo": "taller",
+                    "fecha": "2019-09-16",
+                    "ponderacion": "10"
+                }
+            ]
+        },
+        {
+            "titulo": "El mundo esta loco",
+            "contenido": "Aqui no se enseña ingles",
+            "fechas": [
+                {
+                    "tipo": "clase",
+                    "fecha": "2019-09-18",
+                    "ponderacion": 0
+                },
+                {
+                    "tipo": "clase",
+                    "fecha": "2019-09-23",
+                    "ponderacion": 0
+                },
+                {
+                    "tipo": "parcial",
+                    "fecha": "2019-09-25",
+                    "ponderacion": "15"
+                }
+            ]
+        }
+    ],
+    "hours": [
+        {
+            "start": {
+                "hour": 7,
+                "minute": 0
+            },
+            "end": {
+                "hour": 8,
+                "minute": 30
+            }
+        },
+        {
+            "start": {
+                "hour": 7,
+                "minute": 0
+            },
+            "end": {
+                "hour": 20,
+                "minute": 30,
+                "second": 0
+            }
+        }
+    ]
+}

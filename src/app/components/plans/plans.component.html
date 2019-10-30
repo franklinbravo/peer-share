@@ -149,21 +149,27 @@
           <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
           <mat-datepicker #picker2   startView="year" ></mat-datepicker>
       </mat-form-field> 
-      <button mat-icon-button color="primary" class="save mt-2" [disabled]="!btn_on" [ngClass]="{'btnoff': ((this.dom==false ||this.lun==false || this.mar==false || this.mie==false || this.jue==false || this.vie==false || this.sab==false) && inicio=='' && final=='')}">
-        <fa-icon [icon]="['fas', 'plus-circle']"  (click)="generate(inicio,final)" size="2x"></fa-icon>
-      </button>
+      
   
   
   </div> 
   <!----------Hasta aqui llega la tabla para generar----------->
 
-
   <form [formGroup]="form" *ngIf="show" class="d-flex align-items-center flex-column">
   <mat-form-field class="text-center fill-width">
     <input matInput placeholder="Nombre de la materia"  formControlName="nameMateria" >
+    <mat-error *ngIf="form.controls['nameMateria'].errors?.required && form.controls['nameMateria'].touched">
+      Nombre de la Materia Requerido.
+    </mat-error>
+    <mat-error *ngIf="form.controls['nameMateria'].errors?.minlength && form.controls['nameMateria'].touched">
+      El nombre de la materia debe ser mayor de 3 letras.
+    </mat-error>
+    <mat-error *ngIf="form.controls['nameMateria'].errors?.maxlength && form.controls['nameMateria'].touched">
+      El nombre de la materia debe ser menor de 20 letras.
+    </mat-error>
   </mat-form-field>
-  <div formArrayName="Xs">
-    <mat-accordion class="example-headers-align " *ngFor="let X of form['controls'].Xs['controls']; let ix=index" >
+  <div formArrayName="unidades">
+    <mat-accordion class="example-headers-align " *ngFor="let X of form['controls'].unidades['controls']; let ix=index" >
         
       <div formGroupName='{{ix}}' style="margin: 4px">
           <mat-expansion-panel hideToggle  >
@@ -184,37 +190,50 @@
                     <textarea matInput type="text" placeholder="Contenido" formControlName="contenido" ></textarea>
                   </mat-form-field>
                 </div>
-                <div class="dateEvent " formArrayName="Ys">
-                  <div *ngFor="let Y of X['controls'].Ys['controls']; let iy =index" >
+                <div class="dateEvent " formArrayName="fechas">
+                  <div *ngFor="let Y of X['controls'].fechas['controls']; let iy =index;" >
                     <div formGroupName='{{iy}}'>
-                      <mat-form-field  style="width: 33%" >
-                        <mat-select placeholder="Actividad" #actvidad formControlName="Y1" > 
-                          <mat-option value="clase">Clase</mat-option>
+                      <mat-form-field style="width: 33%">
+                        <mat-select placeholder="Actividad" #actvidad formControlName="tipo" > 
+                          <mat-option value="Clase">Clase</mat-option>
                           <mat-option value="Quiz">Quiz</mat-option>
-                          <mat-option value="test">Test</mat-option>
-                          <mat-option value="taller">Taller</mat-option>
-                          <mat-option value="parcial">Parcial</mat-option>
-                          <mat-option value="prueba_corta">Prueba Corta</mat-option>
+                          <mat-option value="Test">Test</mat-option>
+                          <mat-option value="Taller">Taller</mat-option>
+                          <mat-option value="Exposicion">Exposicion</mat-option>
+                          <mat-option value="Parcial">Parcial</mat-option>
+                          <mat-option value="Prueba_corta">Prueba Corta</mat-option>
+                          <mat-option value="Libre">Libre</mat-option>
                         </mat-select> 
                       </mat-form-field>
-                      <mat-form-field  style="width: 33%">
-                        <input matInput [matDatepicker]="pic" placeholder="Fecha "   formControlName="Y2">
+                      <mat-form-field style="width: 33%">
+                        <input matInput [matDatepicker]="pic" placeholder="Fecha"  [(ngModel)]="dateE[ix][iy]"  formControlName="fecha">
                       </mat-form-field>
-                      <!------------------[hidden]="X['controls'].Ys[iy].Y1=='clase'"---------->
-                      <mat-form-field style="width: 15%" >
-                        <input matInput placeholder="%"  formControlName="Y3">
+                      <!------------------[hidden]="  ---------->
+                      <mat-form-field style="width: 15%" *ngIf="actvidad.value == 'Parcial' || actvidad.value == 'Prueba' || actvidad.value == 'Quiz' || actvidad.value == 'Taller' || actvidad.value == 'Exposicion' || actvidad.value == 'Test' || actvidad.value == 'Prueba_corta'">
+                        <input matInput formControlName="ponderacion">
+                        <span matSuffix>%</span>
                       </mat-form-field>
-                      <fa-icon [icon]="['fas', 'times-circle']" style="width: 15%; cursor: pointer;" (click)="deleteFechas(ix,iy)"></fa-icon>
+                      <fa-icon [icon]="['fas', 'times-circle']" style="width: 15%; cursor: pointer; margin-left: auto" (click)="deleteFechas(ix,iy)"></fa-icon>
+                      <mat-form-field class="d-block" *ngIf="actvidad.value == 'Parcial' || actvidad.value == 'Prueba' || actvidad.value == 'Quiz' || actvidad.value == 'Taller' || actvidad.value == 'Exposicion' || actvidad.value == 'Test' || actvidad.value == 'Prueba_corta'">
+                        <textarea matInput placeholder="Detalles" ></textarea>
+                      </mat-form-field>
                     </div>
+                    
                   </div>
-                  <small class="form-text text-muted">Agrega clases o evaluaciones con el boton abajo</small>
-                  <fa-icon [icon]="['fas', 'plus-circle']" class="plus " (click)="addY(ix)"></fa-icon>
+                  <small class="form-text text-muted">Agrega clases o evaluaciones con el boton abajo</small> 
+                  <fa-icon [icon]="['fas', 'plus-circle']" class="plus " (click)="addY(ix,iy)"></fa-icon>
                 </div>
             </div>
           </mat-expansion-panel>
         </div>
       </mat-accordion>
     </div>
-      <button  class="btn btn-success btnguardar" (click)="save()" >Guardar</button>
   </form>
-  </div>      
+<div class="d-flex align-items-center flex-column" style="width: 100%">
+  <button mat-icon-button color="primary" class="mt-2" [disabled]="!btn_on" [ngClass]="{'btnoff': ((this.dom==false ||this.lun==false || this.mar==false || this.mie==false || this.jue==false || this.vie==false || this.sab==false) && inicio=='' && final=='')}">
+    <fa-icon [icon]="['fas', 'plus-circle']"  (click)="generate(inicio,final)" size="2x"></fa-icon>
+  </button>
+  <button  class="btn btn-success" *ngIf="show" [disabled]="form.invalid" (click)="save()" >Guardar</button>
+</div>
+</div>
+     

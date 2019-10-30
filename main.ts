@@ -1,10 +1,11 @@
-import { app, BrowserWindow, screen, ipcMain, remote } from 'electron';
+import { app, BrowserWindow, screen,Tray, Menu } from 'electron';
 import * as path from 'path';
 import * as url from 'url';
 
-let win, serve, openChatWindow;
+let win, serve, tray,on=true;
 const args = process.argv.slice(1);
 serve = args.some(val => val === '--serve');
+
 
 function createWindow() {
 
@@ -23,7 +24,7 @@ function createWindow() {
       nodeIntegration: true,
     },
   });
-  
+  createTray()
   if (serve) {
     require('electron-reload')(__dirname, {
       electron: require(`${__dirname}/node_modules/electron`)
@@ -37,24 +38,56 @@ function createWindow() {
     }));
     
   }
-
   if (serve) {
     win.webContents.openDevTools();
   }
-
   // Emitted when the window is closed.
-  win.on('closed', () => {
-    // Dereference the window object, usually you would store window
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    win = null;
-  });
+ win.on('close', (e) => {
+   if(!on){
+    win=null;
+   }else{
+     e.preventDefault()
+     win.hide()
+   }
 
-  /*ipcMain.on('openChat', ()=>{
-    openChatWindow.show();
-  })*/
+  
+  // Dereference the window object, usually you would store window
+  // in an array if your app supports multi windows, this is the time
+  // when you should delete the corresponding element.
+  //win = null;
+
+});
+}
+function createTray () {
+  if(serve){
+    tray = new Tray(path.join(__dirname,"/src/assets/img/PeerShare-ink-logo.ico"));
+  }else{
+    tray = new Tray(path.join(__dirname,"/assets/img/PeerShare-ink-logo.ico"));
+  }
+  // On Windows, left click opens the app, right click opens the context menu.
+  // On Linux, any click (left or right) opens the context menu.
+  tray.on('click', () => win.show())
+  // Show the tray context menu, and keep the available commands up to date
+  updateTrayMenu()
 }
 
+function updateTrayMenu () {
+  const contextMenu = Menu.buildFromTemplate(getMenuTemplate())
+  tray.setContextMenu(contextMenu)
+}
+
+function getMenuTemplate () {
+  return [
+    {
+      label: 'Quitar',
+      click: () => deleteApp()
+    }
+  ]
+}
+function deleteApp(){
+  on=false;
+  app.quit();
+}
 try {
 
   // This method will be called when Electron has finished
@@ -67,7 +100,7 @@ try {
     // On OS X it is common for applications and their menu bar
     // to stay active until the user quits explicitly with Cmd + Q
     if (process.platform !== 'darwin') {
-      app.quit();
+     app.quit();
     }
   });
 

@@ -1,7 +1,7 @@
-<main-nav>
-    <div class="wrapper">
+<main-nav >
+    <div [ngClass]="{'wrapper': comComp.logged==true}">
         <div class="sidebar">
-            <app-header  style="z-index: 99"></app-header>
+            <app-header *ngIf="comComp.logged" style="z-index: 9999"></app-header>
         </div>
         <div class="content mt-2">
             <app-chat></app-chat>

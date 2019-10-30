@@ -1,21 +1,22 @@
 
 .chatroom{
 	width: 98.5%;
-	max-width: 900px;
+	//max-width: 900px;
 	height:500px;
 	max-height: 550px;
+	box-shadow: 0px 0px 15px 5px black;
 	transition: height 0.3s; 
 	padding: 0;
 	border-radius: 10px 10px 0px 0px;
 	background-color: rgb(25,21,40);
 	display: grid;
 	grid-template-areas:'chathead chathead chathead chathead chathead chathead chathead chathead chathead chathead '
-	'contacts contacts contacts chat chat chat chat chat chat chat '
-	'contacts contacts contacts chat chat chat chat chat chat chat '
-	'contacts contacts contacts chat chat chat chat chat chat chat '
-	'contacts contacts contacts chat chat chat chat chat chat chat '
-	'contacts contacts contacts chat chat chat chat chat chat chat '
-	'contacts contacts contacts chat chat chat chat chat chat chat ';
+	'contacts contacts chat chat chat chat chat chat chat chat '
+	'contacts contacts chat chat chat chat chat chat chat chat '
+	'contacts contacts chat chat chat chat chat chat chat chat '
+	'contacts contacts chat chat chat chat chat chat chat chat '
+	'contacts contacts chat chat chat chat chat chat chat chat '
+	'contacts contacts chat chat chat chat chat chat chat chat ';
 	grid-gap: 10px;
 }
 .chathead{
@@ -25,6 +26,7 @@
 	border-radius: 10px 10px 0px 0px;
 }
 .contacts{
+	width: 100%;
 	position: relative;
 	grid-area: contacts; 
 	display: grid;
@@ -39,14 +41,15 @@
 	padding: 5px;
 	display: grid;
 	grid-template-rows: 90% 10%;
-	max-width: 750px;
+	width: 100%;
+	//max-width: 750px;
 }
 .chatlogs {
 	position: relative;
 	padding: 10px;
-	width: auto;
+	width: 100%;
 	height: 100%;
-	max-width: 750px;
+	//max-width: 750px;
 	overflow-x:hidden;
 	overflow-y:scroll;
 	background-color: white;
@@ -80,21 +83,69 @@
 	background: #1ddced;
 	border-radius: 10px;
 }
-.users{
-	min-width: 150px;
+.user{
 	width: 100%;
-	overflow-x:hidden;
+	height: 30px;
+	cursor: pointer;
+}
+.userbox{
+	margin-left: 40px;
+	height: 100%;
+}
+.user:hover{
+	background-color: rgb(0,0, 0,0.2);
+}
+.users{
+	min-width: 150px; 
+	width: 100%;
+	//overflow-x:hidden;
 	overflow-y:scroll;
 	height: 400px;
 }
-ul {
-	list-style: none;
+
+/* Tamaño del scroll */
+.users::-webkit-scrollbar {
+	width: 8px;
+	border-radius: 4px;
+	//height: 8px;
+  }
+  
+   /* Estilos barra (thumb) de scroll */
+   .users::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 4px;
+  }
+  
+  .users::-webkit-scrollbar-thumb:active {
+	background-color: #999999;
+  }
+  
+  .users::-webkit-scrollbar-thumb:hover {
+	background: #b3b3b3;
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+   /* Estilos track de scroll */
+   .users::-webkit-scrollbar-track {
+	background: #e1e1e1;
+	border-radius: 4px;
+  }
+  
+  .users::-webkit-scrollbar-track:hover, 
+  .users::-webkit-scrollbar-track:active {
+	background: #d4d4d4;
+  }
+.users::-webkit-scrollbar-thumb{
+	border-radius: 4px;
+	background: #ccc;
 }
-.user-list li {
-	margin-bottom: 10px;
-	font-size: 16px;
-	display: flex;
-	align-items: center;
+.users::-webkit-scrollbar-thumb:hover{
+	background: #b3b3b3;
+	box-shadow: 0 0 2px 1px rgb(0,0, 0,0.2)
+}
+
+.user-list{
+	width: 100%;
 }
 .entrada{
 	display: flex;
@@ -103,7 +154,7 @@ ul {
 	resize: none;
 }
 .msg{
-	width: 90%;
+	width: 100%; 
 	height: 100%;
 }
 .minimizar{

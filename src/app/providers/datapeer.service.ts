@@ -4,6 +4,7 @@ import * as path from 'path';
 import { ElectronService } from './electron.service';
 import {PeerconnectService} from './peerconnect.service'
 import { User} from '../models/user-data'
+import { homedir } from 'os'
 @Injectable({
   providedIn: 'root'
 })
@@ -22,14 +23,16 @@ export class DatapeerService {
   db:Datastore;
   userDataPath:any;
   dbCache: Datastore;
+  dir
   constructor(private _electronService: ElectronService,
   public peerConnect:PeerconnectService  ) {
     this.userDataPath = this._electronService.remote.app.getPath('userData');
     this.db = new Datastore({filename: path.join(this.userDataPath,'db',"userdata.db"),autoload:true})
     this.dbCache=new Datastore({filename: path.join(this.userDataPath,'db',"cache.db"),autoload:true})
-    let dir='./subject'
-    if (!this._electronService.fs.existsSync(dir)){
-      this._electronService.fs.mkdirSync(dir);
+    this.dir=path.join(homedir(),'.PeerShare')
+    console.log(this.dir)
+    if (!this._electronService.fs.existsSync(this.dir)){
+      this._electronService.fs.mkdirSync(this.dir);
     }
     
   }//85047928054075
@@ -40,13 +43,16 @@ export class DatapeerService {
     })
   }
   editSubject(data,name){
-    let archiveJSON=this._electronService.fs.readFileSync(`subject/${name}.json`,'utf-8')
+    let archiveJSON=this._electronService.fs.readFileSync(path.join(this.dir,`${name}.json`),'utf-8')
     let archive=JSON.parse(archiveJSON)
     archive=data;
   }
-  addSubject(data,name){
+  async addSubject(data,name,dir){
+    if (!this._electronService.fs.existsSync(dir)){
+      await this._electronService.fs.mkdirSync(dir);
+    }
     let newData=JSON.stringify(data)
-    this._electronService.fs.writeFileSync(`subject/${name}.json`, newData, 'utf-8')
+    this._electronService.fs.writeFileSync(path.join(dir,`${name}.json`), newData, 'utf-8')
     console.log(this.user)
     let Rclass={
       id:name,
@@ -66,12 +72,11 @@ export class DatapeerService {
     })*/
   }
   showSubject(cb){
-    this.dbCache.find({},async (err,doc)=>{
+    this.dbCache.find({},(err,doc)=>{
       cb(doc)
     })
   }
   addContact(contact){
-    console.log(this.user)
     this.db.update({_id:this.user.id},{$push:{contacts:contact}},{},(err,doc)=>{
       if(err){
         console.log(err) 
@@ -90,6 +95,21 @@ export class DatapeerService {
         cb('Usuario Guardado')
         console.log('Base de datos creada: ',docs)
     }
+  })
+}
+getChat(username,cb){
+  let index
+  this.db.findOne({_id:this.user.id},(err,doc:any)=>{
+    index=doc.contacts.map(e=>{
+      return e.username
+    }).indexOf(username)
+    cb(doc.contacts[index],index)
+  })
+}
+saveMsg(i,msg){
+  let user=`contacts[${i}].chat`
+  this.db.update({_id:this.user.id}, {$set : { user :  msg,}}, {},(err,doc)=>{
+    console.log(err,doc)
   })
 }
 /*async findContacts(){

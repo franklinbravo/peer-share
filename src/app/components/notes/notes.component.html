@@ -1,39 +1,51 @@
 
-<mat-form-field>
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-  </mat-form-field>
-  
-  <div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
-  
-      <!-- ID Column -->
-      <ng-container matColumnDef="id">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.id}} </td>
-      </ng-container>
-  
-      <!-- Progress Column -->
-      <ng-container matColumnDef="progress">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Progress </th>
-        <td mat-cell *matCellDef="let row"> {{row.progress}}% </td>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-        <td mat-cell *matCellDef="let row"> {{row.name}} </td>
-      </ng-container>
-  
-      <!-- Color Column -->
-      <ng-container matColumnDef="color">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-        <td mat-cell *matCellDef="let row" [style.color]="row.color"> {{row.color}} </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
-      </tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 50]"></mat-paginator>
-  </div>
+<div>
+  <button mat-raised-button (click)="addStudient()"> Agregar </button>
+<div>
+    <!---
+    <mat-form-field>
+        <mat-label>Tipo de Calificación</mat-label>
+        <mat-select (selectionChange)="changeOptions($event)">
+            <mat-option *ngFor="let type of typeNote" [value]="type">
+                {{type}}
+            </mat-option>
+        </mat-select>
+    </mat-form-field>-->
+    <mat-form-field>
+        <input matInput type="text" name="filterNotes" [(ngModel)]="filterNotes">
+        <button mat-icon-button matSuffix *ngIf="filterNotes !==''" (click)="filterNotes=''">
+            <mat-icon>clear</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+<form [formGroup]="form">
+    <div formArrayName="notes" class=" table-notes" >
+        <mat-table #table [dataSource]="notes.controls | filterTable:filterNotes" matSort (matSortChange)="sortData($event)" >
+            <ng-container matColumnDef="name" sticky>
+                <mat-header-cell mat-sort-header='name' *matHeaderCellDef class="sort-header-name"> Nombre </mat-header-cell>
+                <mat-cell *matCellDef="let element" style="word-wrap: break-word;" > {{element.get('name').value}}. </mat-cell>
+            </ng-container>
+
+            <ng-container [matColumnDef]="column" *ngFor="let column of displayedColumns; let i=index">
+                <mat-header-cell *matHeaderCellDef mat-sort-header='{{column}}' class="sort-header"  style="word-wrap: break-word;"> {{column}} </mat-header-cell> 
+                <mat-cell *matCellDef="let element" class="cell-input" [formGroup]="element">
+                    <mat-form-field class="table-input"> 
+                        <input  matInput class="mat-input" formControlName='{{column}}'>
+                    </mat-form-field>
+                    
+                </mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="star" stickyEnd>
+                <mat-header-cell *matHeaderCellDef style="justify-content: center;">Eliminar</mat-header-cell>>
+                <mat-cell *matCellDef="let element">
+                    <button mat-icon-button color="warn" (click)="deleteStudient(element)">
+                      <mat-icon>delete</mat-icon>
+                    </button>
+                </mat-cell>
+            </ng-container>
+            <mat-header-row *matHeaderRowDef="columnsToDisplay; sticky: true"></mat-header-row>>
+            <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+        </mat-table> 
+    </div>   
+</form>
+</div>

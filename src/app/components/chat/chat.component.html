@@ -2,42 +2,38 @@
 		<div class="chathead" (click)="minimizar(ch)"><p class="text-center mt-2">ID - {{idpeer}}</p> </div>
 		<div class="contacts"  [hidden]="this.compComu.openClose" >
 		  <div class="search">
-			 <div class="form-group form-inline">
-				<input class="form-control ml-2" type="text" [formControl]="filter"/>
+			 <div class="form-group form-inline" style="margin: 0px; width: 100%">
+				<input class="form-control" style="width: 100%;" type="text" name="filterUsers" [(ngModel)]="filterUsers"/>
 			 </div>
 		  </div>
-		  <div class="users">
-		   <ul class="user-list">
-			 <li *ngFor="let user of contacts$ | async;" >
+		  <div class="users ">
+		   <div class="user-list">
+			 <div *ngFor="let user of datapeer.user.contacts | filter:filterUsers" >
+				 <div class="user">
+					<div class="userbox" (click)="showChat(user.username)">
+						{{user.name}} {{user.lastname}}
+					</div>
+				</div>
+				<!--
 				 <ngb-highlight [result]="user.name" [term]="filter.value" class="m-2"></ngb-highlight>
-				 <ngb-highlight [result]="user.lastname" [term]="filter.value" ></ngb-highlight>
-			 </li>
-		   </ul>
+				 <ngb-highlight [result]="user.lastname" [term]="filter.value" ></ngb-highlight>-->
+				</div>
+			</div>
 		  </div> 
 		</div>
 		<div class="chat"[hidden]="this.compComu.openClose" >
-		 <div class=" chatlogs " [hidden]="this.compComu.openClose" >
-				 <div *ngFor="let newM of chat">
-					 <div class="chatM" [ngClass]="{'self': newM.quien=='emisor','friend': newM.quien=='receptor'}" >
-						 <p class="chat-message">{{newM.msgs}}</p>
-			 </div> 
-		   </div>
-		   <div class="chatM self">
-			 <p class="chat-message">Holaaaaaaaaaaaaaaaa</p>
-		   </div>
-		   <div class="chatM friend">
-			 <p class="chat-message">Holaaaaaaaaaaaaaaaa que tal??</p>
-		   </div>
-		   <div class="chatM self">
-			 <p class="chat-message">Holaaaaaaaaaaaaaaaa jejejejejejejejejejejejejej
-			   jejejejejejejejejejejejejejejejjejejejjejejejejejejejejejejjeje
-			   jejejejejejjejejejejejejjejejejjejejejejjejejejejjejejejejejejejjejejejejejejjejejejjejejejejejjejejejejjejejejejejjejejejejfinaljejejejejejjejejejejejejjejejejjejejejejjejejejejjejejejejejejejjejejejejejejjejejejjejejejejejjejejejejjejejejejejjejejejejfinal
-			 </p>
-		   </div>
-		 </div>
-		 <form class="entrada" [hidden]="this.hiddenchat">
-				 <input type="text" class="form-control msg" placeholder="Mensaje" name="mensaje" [(ngModel)]="msg">
-				 <button type="button" class="btn btn-success" style="height: 100%; width: 10%;" [disabled]="!msg" (click)="enviar()">Enviar</button>
-			 </form>
+			<div class=" chatlogs " [hidden]="this.compComu.openClose" >
+				<div *ngFor="let newM of this.peerconnect.chat">
+					<div class="chatM" [ngClass]="{'self': newM.quien=='emisor','friend': newM.quien=='receptor'}" >
+						<p class="chat-message">{{newM.msgs}}</p>
+					</div> 
+				</div>
+			</div>
+		 	<form class="entrada" [hidden]="this.hiddenchat">
+				<input type="text" class="form-control msg" placeholder="Mensaje" name="mensaje" [(ngModel)]="msg">
+				<button type="button" class="btn btn-success" style="height: 100%; width: 50px;" [disabled]="!msg" (click)="enviar()">
+					<mat-icon style="font-size: 30px">send</mat-icon>
+				</button>
+			</form>
 		</div>
 	  </div> 

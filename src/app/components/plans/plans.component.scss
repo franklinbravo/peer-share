@@ -4,7 +4,7 @@
     grid-template-columns: repeat(7, 60px);
     grid-template-areas:
     "boton boton boton boton boton boton boton"
-    " box box box box2 box2 box2 save";
+    "box box box otro box2 box2 box2";
     
     width: 100%;
 
@@ -16,10 +16,6 @@
   .box2{
     
     grid-area: box2;
-  }
-  .box3{
-    
-    grid-area: box3;
   }
   .save{
     
@@ -46,4 +42,10 @@
   } 
   .btnoff {
     cursor:no-drop;
+  } 
+  .act{
+    width: 45%;
+  } 
+  .act-e{
+    width: 33%;
   } 

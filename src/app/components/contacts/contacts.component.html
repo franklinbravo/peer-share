@@ -1,43 +1,10 @@
- <div class="chatroom container fixed-bottom " [ngClass]="{'minimizar': this.hiddenaux=='activo'}">
-   <div class="chathead" (click)="minimizar()"><p class="text-center mt-2">ID - {{idpeer}}</p> </div>
-   <div class="contacts" [hidden]="this.hiddenchat" [ngClass]="{'minimizar': this.hiddenaux=='activo'}">
-     <div class="search">
-        <div class="form-group form-inline">
-           <input class="form-control ml-2" type="text" [formControl]="filter"/>
-        </div>
-     </div>
-     <div class="users">
-      <ul class="user-list">
-        <li *ngFor="let user of contacts$ | async;" >
-            <ngb-highlight [result]="user.name" [term]="filter.value" class="m-2"></ngb-highlight>
-            <ngb-highlight [result]="user.lastname" [term]="filter.value" ></ngb-highlight>
-        </li>
-      </ul>
-     </div> 
-   </div>
-   <div class="chat"[hidden]="this.hiddenchat" >
-    <div class=" chatlogs " [hidden]="this.hiddenchat" >
-			<div *ngFor="let newM of chat">
-				<div class="chatM" [ngClass]="{'self': newM.quien=='emisor','friend': newM.quien=='receptor'}" >
-					<p class="chat-message">{{newM.msgs}}</p>
-        </div> 
-      </div>
-      <div class="chatM self">
-        <p class="chat-message">Holaaaaaaaaaaaaaaaa</p>
-      </div>
-      <div class="chatM friend">
-        <p class="chat-message">Holaaaaaaaaaaaaaaaa que tal??</p>
-      </div>
-      <div class="chatM self">
-        <p class="chat-message">Holaaaaaaaaaaaaaaaa jejejejejejejejejejejejejej
-          jejejejejejejejejejejejejejejejjejejejjejejejejejejejejejejjeje
-          jejejejejejjejejejejejejjejejejjejejejejjejejejejjejejejejejejejjejejejejejejjejejejjejejejejejjejejejejjejejejejejjejejejejfinaljejejejejejjejejejejejejjejejejjejejejejjejejejejjejejejejejejejjejejejejejejjejejejjejejejejejjejejejejjejejejejejjejejejejfinal
-        </p>
-      </div>
+<div class="container">
+    <div>
+        <form> 
+             <input class="form-control" type="text" name="contact" [(ngModel)]="this.compComu.contact" > 
+        </form>
     </div>
-    <form class="entrada" [hidden]="this.hiddenchat">
-			<input type="text" class="form-control msg" placeholder="Mensaje" name="mensaje" [(ngModel)]="msg">
-			<button type="button" class="btn btn-success" style="height: 100%; width: 10%;" [disabled]="!msg" (click)="enviar()">Enviar</button>
-		</form>
-   </div>
- </div> 
+    <div *ngFor="let user of this.dataPeer.user.contacts">
+        <div class="contact">{{user.name}} {{user.lastname}}</div>
+    </div>
+</div>

@@ -5,7 +5,10 @@ import { NgModule } from '@angular/core';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { AngularFireModule} from '@angular/fire';
+import { AngularFireDatabaseModule} from '@angular/fire/database';
+import { AngularFirestoreModule} from '@angular/fire/firestore'
+import { AngularFireAuth } from '@angular/fire/auth'; 
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -19,7 +22,7 @@ import { ElectronService } from './providers/electron.service';
 import { DatapeerService } from './providers/datapeer.service';
 import { PeerconnectService } from './providers/peerconnect.service';
 import { EncrDecrService } from './providers/encr-decr.service';
-
+import { FireService} from './providers/fire.service';
 //Component
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
@@ -31,8 +34,10 @@ import { ChatComponent } from './components/chat/chat.component';
 import { PlansComponent } from './components/plans/plans.component';
 import { CardsComponent } from './components/cards/cards.component';
 import { MainNavComponent } from './components/main-nav/main-nav.component';
-
-// modulos para animacion y estilos
+import { ContactsComponent } from './components/contacts/contacts.component';
+import { LoginComponent } from './components/login/login.component';
+import { AppConfig } from '../environments/environment'
+ // modulos para animacion y estilos
 import 'flatpickr/dist/flatpickr.css';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
@@ -47,8 +52,17 @@ import { MaterialModules } from './material-config';
 //Iconos
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCalendar, faAddressCard,faArchive, faBars, faComments ,faPlusCircle, faTimesCircle} from '@fortawesome/free-solid-svg-icons';
-import { ContactsComponent } from './components/contacts/contacts.component';
+import { faCalendarPlus, 
+  faAddressCard,
+  faArchive, 
+  faBars, 
+  faComments ,
+  faPlusCircle, 
+  faTimesCircle,
+  faAddressBook
+  } from '@fortawesome/free-solid-svg-icons';
+import { FilterPipe } from './pipe/filter.pipe';
+import { FilterTablePipe } from './pipe/filter-table.pipe';
 
 
 
@@ -70,10 +84,13 @@ export function HttpLoaderFactory(http: HttpClient) {
     CardsComponent,
     MainNavComponent,
     NotesComponent,
-    ContactsComponent
+    ContactsComponent,
+    LoginComponent,
+    FilterPipe,
+    FilterTablePipe
   ],
   exports: [
-    PlansComponent],
+    ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -81,6 +98,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     CommonModule,
     ReactiveFormsModule,
     HttpClientModule,
+    AngularFireDatabaseModule,
+    AngularFireModule.initializeApp(AppConfig.firebaseConfig),
+    AngularFirestoreModule,
     FontAwesomeModule,
     NgbModalModule,
     NgbCollapseModule,
@@ -103,11 +123,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     LayoutModule,
     MaterialModules
   ],
-  providers: [ElectronService,PeerconnectService, DatapeerService, EncrDecrService],
+  providers: [ElectronService,PeerconnectService, DatapeerService, EncrDecrService,AngularFireAuth, FireService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
   constructor(){
-    library.add(faCalendar,faAddressCard, faArchive, faBars, faComments, faPlusCircle, faTimesCircle);
+    library.add(faCalendarPlus,faAddressCard, faArchive, faBars, faComments, faPlusCircle, faTimesCircle, faAddressBook);
   }
 }

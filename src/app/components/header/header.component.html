@@ -7,16 +7,33 @@
     </fa-icon>
   </a>
   <a color="primary" class="mt-auto" >
-    <fa-icon [icon]="['fas', 'calendar']" size="2x" ></fa-icon>
+    <fa-icon [icon]="['fas', 'calendar-plus']" size="2x" routerLink="/plans" ></fa-icon>
   </a>
   <a color="primary" class="mt-auto">
     <fa-icon [icon]="['fas', 'comments']" size="2x" (click)="this.abrirChat()" ></fa-icon>
   </a>
-  <a  color="primary" class="mt-auto mb-auto" >
+  <a  color="primary" class="mt-auto" >
     <fa-icon [icon]="['fas', 'address-card']" size="2x"></fa-icon>
   </a>
-  <a color="primary" class="mb-auto " >
-    <fa-icon [icon]="['fas', 'archive']" size="2x" ></fa-icon>
+  <a  color="primary" class="mt-auto mb-auto" >
+    <fa-icon [icon]="['fas', 'address-book']" size="2x" (click)="this.open(content)"></fa-icon>
   </a>
-  
+  <a color="primary" class="mb-auto " >
+    <fa-icon [icon]="['fas', 'archive']" size="2x"></fa-icon>
+  </a>
 </nav>
+<ng-template #content let-c="close" let-d="dismiss">
+  <div class="modal-header" >
+    <h4 class="modal-title" id="modal-basic-title">Agregar Contactos</h4>
+    <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <p>{{this.compComu.contact}}</p>
+    <app-contacts></app-contacts>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="saveContact()">Save</button>
+  </div>
+</ng-template>  

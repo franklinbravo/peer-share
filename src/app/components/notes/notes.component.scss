@@ -1,12 +1,94 @@
-table {
-    width: 100%;
+.table-notes{
+  max-height: 500px;
+  height: 100%;
+  width: 98%;
+  //min-width: 500px;
+  overflow: auto; 
+}
+/* Tamaño del scroll */
+.table-notes::-webkit-scrollbar {
+	//width: 8px;
+	border-radius: 4px;
+	height: 10px;
   }
   
-  .mat-form-field {
-    font-size: 14px;
-    width: 100%;
+   /* Estilos barra (thumb) de scroll */
+.table-notes::-webkit-scrollbar-thumb {
+	background: #ccc;
+	border-radius: 4px;
   }
   
-  td, th {
-    width: 25%;
+.table-notes::-webkit-scrollbar-thumb:active {
+	background-color: #5e5b5b;
   }
+  
+.table-notes::-webkit-scrollbar-thumb:hover {
+	background: #b3b3b3;
+	box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.2);
+  }
+  
+   /* Estilos track de scroll */
+.table-notes::-webkit-scrollbar-track {
+	background: #e1e1e1;
+	border-radius: 4px;
+  }
+  
+.table-notes::-webkit-scrollbar-track:hover, 
+.table-notes::-webkit-scrollbar-track:active {
+	background: #d4d4d4;
+  }
+.users::-webkit-scrollbar-thumb{
+	border-radius: 4px;
+	background: #ccc;
+}
+.table-notes::-webkit-scrollbar-thumb:hover{
+	background: #b3b3b3;
+	box-shadow: 0 0 2px 1px rgb(0,0, 0,0.2)
+}
+.table-input{
+  width: 65%;
+  text-align: center;
+}
+.mat-table{
+  width: 100%;
+  min-width: 800px;
+}
+.mat-cell{
+  //justify-content: center;
+  text-align: center;
+}
+/*
+.sort-header-name{
+  //margin-right: 10px;
+  //padding-left: 30px;
+  //padding-right: 9px;
+}
+
+.mat-input{
+  margin: 0;
+}
+
+.mat-column-star {
+  width: 20px;
+  padding-right: 8px;
+}
+
+.mat-column-position, .mat-column-position {
+  padding-left: 8px;
+}
+
+.mat-header-cell{
+  //padding: 15px;
+  align-items: center;
+  //justify-content: center;
+}
+
+.sort-header{
+  width: 50px;
+  //padding-left: 15px
+ 
+}
+
+.cell-input{
+  border: 1px solid white; 
+}*/
