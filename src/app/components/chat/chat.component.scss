@@ -8,21 +8,21 @@
 	transition: height 0.3s; 
 	padding: 0;
 	border-radius: 10px 10px 0px 0px;
-	background-color: rgb(25,21,40);
+	background-color:#2b2b2b;
 	display: grid;
 	grid-template-areas:'chathead chathead chathead chathead chathead chathead chathead chathead chathead chathead '
-	'contacts contacts chat chat chat chat chat chat chat chat '
-	'contacts contacts chat chat chat chat chat chat chat chat '
-	'contacts contacts chat chat chat chat chat chat chat chat '
-	'contacts contacts chat chat chat chat chat chat chat chat '
-	'contacts contacts chat chat chat chat chat chat chat chat '
-	'contacts contacts chat chat chat chat chat chat chat chat ';
+						'contacts contacts chat chat chat chat chat chat chat chat '
+						'contacts contacts chat chat chat chat chat chat chat chat '
+						'contacts contacts chat chat chat chat chat chat chat chat '
+						'contacts contacts chat chat chat chat chat chat chat chat '
+						'contacts contacts chat chat chat chat chat chat chat chat '
+						'contacts contacts chat chat chat chat chat chat chat chat ';
 	grid-gap: 10px;
 }
 .chathead{
 	height: 40px;
 	grid-area: chathead;
-	background-color: rgb(17,12,32);
+	background-color: #2b2b2b;
 	border-radius: 10px 10px 0px 0px;
 }
 .contacts{

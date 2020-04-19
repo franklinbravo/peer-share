@@ -1,6 +1,22 @@
-
-<div>
-  <button mat-raised-button (click)="addStudient()"> Agregar </button>
+<ng-template #content let-c="close" let-d="dismiss">
+    <div class="modal-header" >
+      <h4 class="modal-title" id="modal-basic-title">Agregar estudiante a la tabla</h4>
+      <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <ul *ngFor="let user of this.dataPeer.user.contacts">
+            <li class="contact" (click)="addStudent(user)">{{user.name}} {{user.lastname}}</li>
+        </ul>
+    </div>
+   
+  </ng-template>  
+<div class="container">
+    <button mat-raised-button 
+        (click)="openModal(content)"
+        > Agregar Estudiante
+    </button>
 <div>
     <!---
     <mat-form-field>
@@ -11,14 +27,14 @@
             </mat-option>
         </mat-select>
     </mat-form-field>-->
-    <mat-form-field>
-        <input matInput type="text" name="filterNotes" [(ngModel)]="filterNotes">
-        <button mat-icon-button matSuffix *ngIf="filterNotes !==''" (click)="filterNotes=''">
+    <mat-form-field  class="filtro">
+        <input matInput type="text" class="filtro" name="filterNotes" [(ngModel)]="filterNotes">
+        <button mat-icon-button matSuffix *ngIf="filterNotes !==''" class="filtro" (click)="filterNotes=''">
             <mat-icon>clear</mat-icon>
         </button>
     </mat-form-field>
 </div>
-<form [formGroup]="form">
+<form [formGroup]="form" *ngIf="showForm==true">
     <div formArrayName="notes" class=" table-notes" >
         <mat-table #table [dataSource]="notes.controls | filterTable:filterNotes" matSort (matSortChange)="sortData($event)" >
             <ng-container matColumnDef="name" sticky>
@@ -37,7 +53,7 @@
             </ng-container>
             <ng-container matColumnDef="star" stickyEnd>
                 <mat-header-cell *matHeaderCellDef style="justify-content: center;">Eliminar</mat-header-cell>>
-                <mat-cell *matCellDef="let element">
+                <mat-cell *matCellDef="let element" class="d-flex align-items-center flex-column">
                     <button mat-icon-button color="warn" (click)="deleteStudient(element)">
                       <mat-icon>delete</mat-icon>
                     </button>
@@ -48,4 +64,11 @@
         </mat-table> 
     </div>   
 </form>
+<button mat-raised-button 
+    *ngIf="form.value.notes.length !==0"
+    color="accent"
+    class="saveNotesButton fixed-bottom"
+    (click)="saveNotes()"
+        > Guardar
+    </button>
 </div>

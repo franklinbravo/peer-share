@@ -1,5 +1,5 @@
 <div class="chatroom container fixed-bottom " [ngClass]="{minimizar: this.compComu.openClose}">
-		<div class="chathead" (click)="minimizar(ch)"><p class="text-center mt-2">ID - {{idpeer}}</p> </div>
+		<div class="chathead" (click)="minimizar()"><p class="text-center mt-2">ID - {{idpeer}}</p> </div>
 		<div class="contacts"  [hidden]="this.compComu.openClose" >
 		  <div class="search">
 			 <div class="form-group form-inline" style="margin: 0px; width: 100%">
@@ -10,7 +10,7 @@
 		   <div class="user-list">
 			 <div *ngFor="let user of datapeer.user.contacts | filter:filterUsers" >
 				 <div class="user">
-					<div class="userbox" (click)="showChat(user.username)">
+					<div class="userbox" (click)="showChat(user.username,user.id)">
 						{{user.name}} {{user.lastname}}
 					</div>
 				</div>
@@ -23,13 +23,13 @@
 		</div>
 		<div class="chat"[hidden]="this.compComu.openClose" >
 			<div class=" chatlogs " [hidden]="this.compComu.openClose" >
-				<div *ngFor="let newM of this.peerconnect.chat">
+				<div *ngFor="let newM of this.chat">
 					<div class="chatM" [ngClass]="{'self': newM.quien=='emisor','friend': newM.quien=='receptor'}" >
 						<p class="chat-message">{{newM.msgs}}</p>
 					</div> 
 				</div>
 			</div>
-		 	<form class="entrada" [hidden]="this.hiddenchat">
+		 	<form class="entrada" >
 				<input type="text" class="form-control msg" placeholder="Mensaje" name="mensaje" [(ngModel)]="msg">
 				<button type="button" class="btn btn-success" style="height: 100%; width: 50px;" [disabled]="!msg" (click)="enviar()">
 					<mat-icon style="font-size: 30px">send</mat-icon>

@@ -1,12 +1,9 @@
-import { Injectable, OnDestroy, NgZone } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { isNullOrUndefined } from 'util';
 import Peer from 'peerjs';
 import { ToastrService } from 'ngx-toastr'
-import { EncrDecrService }from './encr-decr.service'
-import { Observable, timer } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import { retryWhen, delayWhen } from 'rxjs/operators';
-import { resolve } from 'path';
 
 type MyArrayType = Array<{quien: string, msgs: string}>;
 @Injectable({
@@ -16,24 +13,21 @@ export class PeerconnectService implements  OnDestroy {
   db:any;
   peer: Peer;
   conn: any;
-  
-  userDataPath:any;
-  chat: MyArrayType = [];
-  remotePeerId: string;
-  myPeerId: string;
-  peerid:any;
+  chat: MyArrayType = [
+    {quien: '',
+     msgs: ''}
+    ];
   idpeer: string;
-  messageLog: string = "Log:\n\n";
   readonly URL ='http://localhost:3000';
- 
-  msg:any; 
-  msgid:any;
-  peer2: Peer;
+  private chatObs = new Subject<any>();
+  public chatObs$ = this.chatObs.asObservable();
+  
+
   constructor(
-    private _ngZone: NgZone, 
     private toastr: ToastrService,
-    private crypto:EncrDecrService,
-    private http:HttpClient) {
+    private http:HttpClient
+    ) {
+      
       /*
       setInterval(()=>{
         this.getUsersAct()
@@ -63,7 +57,7 @@ export class PeerconnectService implements  OnDestroy {
     
   openPeer(id){
     console.log('openpeer',id)
-    return Observable.create(async(obs)=>{
+    return Observable.create((obs)=>{
       this.peer
       obs.next(this.peer);  
     });
@@ -72,6 +66,7 @@ async getPeerId(peerid){
   this.peer=await new Peer(peerid,{host: 'localhost', path: '/api',port:3000,secure:false});
   
     this.peer.on('open',(id)=>{
+      this.idpeer=id;
       console.log('id peeer',id)
     })
     this.peer.on('connection', (conn) => {
@@ -83,8 +78,6 @@ async getPeerId(peerid){
         this.peer.reconnect()
       },5000)
     })
-   
-
 } 
   ngOnDestroy() {
     if(!isNullOrUndefined(this.peer)) {
@@ -105,36 +98,42 @@ async getPeerId(peerid){
     });
     this.conn.on('data', (data) => {
       //Condicionales para identificar que tipo de dato es recibido
+      console.log(data,'receptor de datos')
       this.chatM(data,"receptor");
     });
   }
 
   connect(remoteP){
-    console.log(remoteP)
     let conn = this.peer.connect(remoteP);
     this.setUpConnection(conn)
-    return new Promise((resolve,reject)=>{
-      
-    })
   }
 
-  sendMsg(msg,cb) {
-    if(!isNullOrUndefined(this.conn)) {
-      this.chatM(msg,"emisor");
+  sendMsg(msg,peer,cb) {
+    if(!isNullOrUndefined(this.conn) && this.conn.peer==peer) {
+      this.chatM(msg);
       this.conn.send(msg); 
       cb()
     }
     else {
-      this.toastr.error('Todavia no se ha conectado en la red','Error');
+      //cb('sendToNodes')
+      this.toastr.error('Hubo un error, intente nuevamente','Error');
     }
   }
 
   
-  chatM(msg:any,other:any){
-    
-    this.chat.push({ quien: other , msgs: msg })
-    console.log(this.chat)
-    return this.chat;
+  chatM(msgs:any,other?:any){
+    if(other=='receptor'){
+      let data={ 
+        quien: 'receptor', 
+        msgs: msgs.msgs,
+        from:msgs.form 
+      }
+      this.chatObs.next(data);
+    }else{
+      this.chatObs.next(msgs);
+      this.chat.push(msgs);
+      console.log(this.chat);
+    }
   }
   
   //----------------------HTTP-------------------

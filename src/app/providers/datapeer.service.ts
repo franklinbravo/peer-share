@@ -18,23 +18,25 @@ export class DatapeerService {
       name:'Franklin',
       lastname:'Bravo',
       key:'123456789'
-    }]
+    }],
+    chat:[{}]
   } 
   db:Datastore;
   userDataPath:any;
   dbCache: Datastore;
+  dbChat: Datastore;
   dir
   constructor(private _electronService: ElectronService,
   public peerConnect:PeerconnectService  ) {
     this.userDataPath = this._electronService.remote.app.getPath('userData');
     this.db = new Datastore({filename: path.join(this.userDataPath,'db',"userdata.db"),autoload:true})
+    this.dbChat= new Datastore({filename: path.join(this.userDataPath,'db',"messages.db"),autoload:true})
     this.dbCache=new Datastore({filename: path.join(this.userDataPath,'db',"cache.db"),autoload:true})
     this.dir=path.join(homedir(),'.PeerShare')
-    console.log(this.dir)
     if (!this._electronService.fs.existsSync(this.dir)){
       this._electronService.fs.mkdirSync(this.dir);
     }
-    
+
   }//85047928054075
   getSubject(cb){
     this.db.find({_id:this.user.id},(err,doc)=>{
@@ -47,80 +49,105 @@ export class DatapeerService {
     let archive=JSON.parse(archiveJSON)
     archive=data;
   }
-  async addSubject(data,name,dir){
+  async addSubject(data,id,cb){
+    /*
     if (!this._electronService.fs.existsSync(dir)){
       await this._electronService.fs.mkdirSync(dir);
     }
     let newData=JSON.stringify(data)
     this._electronService.fs.writeFileSync(path.join(dir,`${name}.json`), newData, 'utf-8')
-    console.log(this.user)
+    console.log(this.user)*/
     let Rclass={
-      id:name,
+      id,
       nameClass:data.nameMateria,
-      numUni:data.unidades.length 
+      numUni:data.unidades.length,
+      data
     }
     this.db.update({_id:this.user.id},{$push:{class:Rclass}},{},(err,doc)=>{
       if(err){
         console.log(err) 
+        cb('Hubo un error al intentar guardar esta clase','Error')
       }else{
+        cb('Clase Guardada','Exito')
       console.log(doc,'Clase guardada') 
       }
     })
-    /*
-    this.dbCache.insert({data},(err,doc)=>{
-      console.log(doc)
-    })*/
   }
   showSubject(cb){
     this.dbCache.find({},(err,doc)=>{
       cb(doc)
     })
   }
-  addContact(contact){
-    this.db.update({_id:this.user.id},{$push:{contacts:contact}},{},(err,doc)=>{
-      if(err){
-        console.log(err) 
-      }else{
-      console.log(doc,'contacto guardado') 
-      }
+  deleteSubject(id){
+    this.db.update({_id:this.user.id }, { $pull: { class: {id} } }, {}, ()=> {
+      // Now the fruits array is ['orange', 'pear']
+    });
+  }
+  addContact(contact,cb?){
+    this.createChat(this.user.dataLog,contact,id=>{
+      contact['id']=id;
+      this.db.update({_id:this.user.id},{$push:{contacts:contact}},{},(err,doc)=>{
+        if(err) throw err;
+        console.log(doc,'contacto guardado')
+        cb(id)
+      })
     })
+    
   }
 
   createUser(data:User,cb){
     console.log(data)
     this.db.insert(data,(err,docs)=>{
-      if(err){
-      //console.log(err)
-      }else{
-        cb('Usuario Guardado')
-        console.log('Base de datos creada: ',docs)
+      if(err) throw err
+      
+      cb('Usuario Guardado')
+      console.log('Base de datos creada: ',docs)
+  })
+}
+  createChat(dataLog,user,cb){
+    let data={
+      dataLog,
+      user,
+      chat:[]
     }
-  })
-}
-getChat(username,cb){
-  let index
-  this.db.findOne({_id:this.user.id},(err,doc:any)=>{
-    index=doc.contacts.map(e=>{
-      return e.username
-    }).indexOf(username)
-    cb(doc.contacts[index],index)
-  })
-}
-saveMsg(i,msg){
-  let user=`contacts[${i}].chat`
-  this.db.update({_id:this.user.id}, {$set : { user :  msg,}}, {},(err,doc)=>{
-    console.log(err,doc)
-  })
-}
+    this.dbChat.insert(data,(err,doc:any)=>{
+      cb(doc._id)
+      console.log(doc)
+    })
+  }
+  getChat(id,cb){
+    this.dbChat.findOne({_id:id},(err,doc:any)=>{
+      if(err) throw err;
+      console.log(doc)
+      console.log(doc.chat)
+      // let UserIndex=doc.map(e=>{ return e.user.username}).indexOf(user)
+      //cb(doc[UserIndex].chat)
+      cb(doc.chat)
+    })
+  }
+  saveMsg(msg,id,user?){
+    if(id){
+      this.dbChat.update({_id:id}, {$push:{chat:msg}}, {},(err,doc)=>{
+        if(err) throw err
+        console.log(doc)
+      })
+    }else{
+      this.addContact(user,id=>{
+        this.saveMsg(msg,id)
+      })
+      
+    }
+    
+  }
 /*async findContacts(){
   await this.db.find({_id:this.user.id},(err, doc:Array<User>)=>{
     this.user.contacts=doc[0].contacts;
   })
 }*/
-async find(username:string,pwd:string,cb){
-  await this.db.find({dataLog:{username:username,pwd:pwd}}, async (err, doc:Array<User>)=>{
-    await cb(err,doc)
-  })
+  find(username:string,pwd:string,cb){
+    this.db.find({dataLog:{username:username,pwd:pwd}}, (err, doc:Array<User>)=>{
+      cb(err,doc)
+    })
 }
 deleteData(){ 
   this.db.remove({_id:this.user.id}, { multi: true }, function(err, numDeleted) {  

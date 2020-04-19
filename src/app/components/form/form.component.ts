@@ -55,7 +55,7 @@ async  save(){
     keyPriv:keys.keyPriv,
     keyPub:keys.keyPub,
     contacts:[],
-    class:[]
+    class:[],
   }
   let verify=await this.fire.verifyUser(data).subscribe(dat=>{
     console.log(dat.payload.data())

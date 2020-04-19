@@ -10,8 +10,10 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EncrDecrService } from '../../providers/encr-decr.service'
 import { DatapeerService } from '../../providers/datapeer.service'
 import { FileShareService } from '../../providers/file-share.service'
-import * as path from 'path';
-import { homedir } from 'os'
+import { ToastrService } from 'ngx-toastr'
+import { Router } from '@angular/router';
+//import * as path from 'path';
+//import { homedir } from 'os'
 
 
 @Component({
@@ -86,7 +88,9 @@ export class PlansComponent implements OnInit {
   constructor(private fb: FormBuilder, 
     private dataPeer:DatapeerService,
     private crypto:EncrDecrService,
-    private share:FileShareService 
+    private share:FileShareService,
+    public toastr:ToastrService,
+    private router:Router,
     ) {
     
   }
@@ -261,6 +265,29 @@ export class PlansComponent implements OnInit {
     }
     this.hours.push(date)
   }
+  createTableHeader(json,cb){
+    let tableHead=[]
+    json.unidades.forEach((e:any)=>{
+      e.fechas.forEach((a:any)=>{
+        if(a.tipo!='Clase' ){
+          if(a.tipo!='Libre'){
+            let f=a.fecha.toString()
+            let num=parseInt(a.ponderacion.toString())
+            let asd;
+            if(num<10){
+              asd=`${a.tipo} *0${a.ponderacion}%* ${f.substr(8,15)}`
+            }else{
+              asd=`${a.tipo} *${a.ponderacion}%* ${f.substr(8,15)}`
+            }
+            tableHead.push(asd)
+          }
+        }
+      })
+    })
+    setTimeout(() => {
+      cb(tableHead);
+    }, 3000);
+  }
   async save(){
     this.hours=[];
     if(this.dom){
@@ -284,13 +311,30 @@ export class PlansComponent implements OnInit {
     if(this.sab){
       this.insertHours(this.timeI7,this.meridianI7,this.timeF7,this.meridianF7)
     }
-    let data =this.form.value
-    data.hours=this.hours;
-    console.log(data,'aqui')
-    let date=format(new Date(),'DD/MM/YYYY') 
-    let dir=path.join(homedir(),'.PeerShare',this.form.value.nameMateria)
-    let datahash=this.crypto.createHash(`${this.form.value.nameMateria}${date}`)
-    this.dataPeer.addSubject(data,datahash,dir) 
-    this.share.execAction({ type: 'TRY_ADD_DAT', path:dir})
+    var data:object;
+    this.createTableHeader(this.form.value,metadata=>{
+      data ={
+        ...this.form.value,
+      hours:this.hours,
+      notes:[],
+      metadata
+      }
+      console.log(data,'aqui')
+      let date=format(new Date(),'DD/MM/YYYY') 
+      //let dir=path.join(homedir(),'.PeerShare',this.form.value.nameMateria)
+      let datahash=this.crypto.createHash(`${this.form.value.nameMateria}${date}`)
+      this.dataPeer.addSubject(data,datahash,(msg,type)=>{
+        if(type=='Error'){
+          this.toastr.error(msg,type)
+        }else{
+          this.toastr.success(msg,type)
+          this.router.navigate(['/cards'])
+        }
+      }) 
+      //this.share.execAction({ type: 'TRY_ADD_DAT', path:dir})
+
+    })
+    
+    
   }
 }

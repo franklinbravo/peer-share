@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit {
           name:doc[0].name,
           lastname:doc[0].lastname,
           user:doc[0].dataLog.username,
+          dataLog:doc[0].dataLog,
           id:doc[0]._id,
           contacts:doc[0].contacts
         } 

@@ -57,6 +57,21 @@
   //justify-content: center;
   text-align: center;
 }
+.filtro{
+  width: 98%;
+}
+ul{
+  list-style: none;
+  border-radius: 5px;
+}
+ul:hover{
+  background-color: rgb(0,0, 0,0.2);
+}
+.saveNotesButton{
+  width: 98%;
+  margin-bottom: 5%;
+  z-index: 0;
+}
 /*
 .sort-header-name{
   //margin-right: 10px;

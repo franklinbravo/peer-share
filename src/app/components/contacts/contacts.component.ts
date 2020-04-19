@@ -10,7 +10,7 @@ export class ContactsComponent {
 
   constructor(
     public compComu:ComponentComunicationService,
-    private dataPeer:DatapeerService
+    public dataPeer:DatapeerService
     ) {
     
   }

@@ -3,17 +3,22 @@
     <!--*ngFor="let card of cards"-->
     <mat-card [class.mat-elevation-z0]="elevation" class="example-card item" >
       <mat-card-header>
-        <mat-card-title>{{card.nameClass}}</mat-card-title>
+        <mat-card-title >
+          {{card.nameClass}}
+          <mat-icon class="icon-edit ">edit</mat-icon>
+        </mat-card-title>
         <mat-card-subtitle>{{card.numUni}} Unidades</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <p style="word-wrap: break-word;">
           {{card.id}}
+          <mat-icon class="icon" (click)="copy(card.id)">file_copy</mat-icon>
         </p>
+        
       </mat-card-content>
       <mat-card-actions>
-        <button mat-button>Editar</button>
-        <button mat-button>Eliminar</button>
+        <button mat-button (click)="notesEdit(card.id)">Notas</button>
+        <button mat-button (click)="delete(card.id)">Eliminar</button>
       </mat-card-actions>
     </mat-card>
 

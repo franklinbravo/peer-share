@@ -17,7 +17,7 @@ const routes: Routes = [
     {path:'form', component: FormComponent },
     {path:'plans', component: PlansComponent },
     {path:'cards', component: CardsComponent },
-    {path:'notes', component: NotesComponent },
+    {path:'notes/:id', component: NotesComponent },
     {path:'contacts',component:ContactsComponent},
     {path:'chat', component: ChatComponent},
     {path:'login', component: LoginComponent}
