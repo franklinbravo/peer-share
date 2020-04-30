@@ -1,6 +1,6 @@
 
 
-# Introduction
+# Virtual classroom software with P2P connection
 
 Currently runs with:
 
